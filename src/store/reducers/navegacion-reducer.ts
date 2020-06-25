@@ -6,7 +6,7 @@ const update = require('immutability-helper');
 
 export const initialState = {
     notification: null as null | INotificacion,
-    section: 'estadísticas' as ISection
+    section: 'parcelas' as ISection
 };
 
 export function reducer(state: typeof initialState=initialState, action: actionTypes) {
