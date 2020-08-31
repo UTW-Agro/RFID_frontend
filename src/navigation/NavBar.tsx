@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppBar, Toolbar, Typography, IconButton} from '@material-ui/core';
-import {Menu, ExitToApp, ArrowBack, Person} from '@material-ui/icons';
+import {ExitToApp, ArrowBack, Person} from '@material-ui/icons';
 import {userService} from "../services/UserService";
 import {connect} from "react-redux";
 import moment from "moment";
@@ -13,11 +13,12 @@ moment.locale('es');
 
 
 interface FProps {
+    selectSection(section: ISection): void
     seccion: ISection
+    selection: string
 }
 
 function NavBar(props: FProps){
-    let title: string = props.seccion;
 
     return (
         <AppBar style={{
@@ -31,19 +32,44 @@ function NavBar(props: FProps){
 
                 <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start", width: '90%'}}>
 
-                    <Typography
-                        color="inherit"
-                        style={{
-                            marginLeft: 60,
-                            width: '90%',
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
-                            fontSize: 24
-                        }}
-                    >
-                        {title}
-                    </Typography>
+                    {props.seccion === 'Registros' && (userService.getUser() === 'julio' || userService.getUser() === 'jesus')?
+                    <IconButton style={{marginLeft: 20, color: 'white'}} onClick={() => props.selectSection('Menu')}>
+                        <ArrowBack/>
+                    </IconButton>
+                        :
+                        null
+                    }
+
+                    {props.seccion === 'Registros'?
+                        <Typography
+                            color="inherit"
+                            style={{
+                                marginLeft: 60,
+                                width: '90%',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                fontSize: 24
+                            }}
+                        >
+                            Registro de horas de {props.selection}
+                        </Typography>
+                        :
+                        <Typography
+                            color="inherit"
+                            style={{
+                                marginLeft: 60,
+                                width: '90%',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                fontSize: 24
+                            }}
+                        >
+                            Menu
+                        </Typography>
+                    }
+
                 </div>
 
                 <Person style={{marginRight: 10}}/>
@@ -60,11 +86,12 @@ function NavBar(props: FProps){
 
 
 const mapStateToProps = (state: IStore) => ({
-    seccion: state.navegacion.section
+    seccion: state.navegacion.section,
+    selection: state.navegacion.selection
 });
 
 const mapDispatchToProps = (dispatch: (action: actionTypes) => void) => ({
-
+    selectSection: (section: ISection) => dispatch({type: "select-section", section})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

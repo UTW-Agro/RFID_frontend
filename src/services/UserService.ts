@@ -5,7 +5,8 @@ export const userService = {
     login,
     logout,
     authHeader,
-    getUser
+    getUser,
+    getPass
 };
 
 function authHeader(): {Authorization: string} | null {
@@ -26,6 +27,18 @@ function getUser(): string | null {
 
     if (stored) {
         return stored.user
+    } else {
+        logout();
+        return null;
+    }
+}
+
+function getPass(): string | null {
+    const auth = localStorage.getItem('auth');
+    const stored: {user: string, password: string} = auth ? JSON.parse(auth): null;
+
+    if (stored) {
+        return stored.password
     } else {
         logout();
         return null;

@@ -11,5 +11,20 @@ interface INotify {
     notification: null | INotificacion
 }
 
-type actionTypes = SelectSectionAction | INotify
+interface SetRegistros {
+    type: 'set-registros'
+    registros: Record<string, any>[]
+}
+
+interface SetMostrar {
+    type: 'set-mostrar'
+    mostrar: Record<string, any>[]
+}
+
+interface SetSelection {
+    type: 'set-selection'
+    selection: string
+}
+
+type actionTypes = SelectSectionAction | INotify | SetRegistros | SetMostrar | SetSelection
 export default actionTypes

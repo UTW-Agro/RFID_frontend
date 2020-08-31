@@ -6,7 +6,8 @@ const update = require('immutability-helper');
 
 export const initialState = {
     notification: null as null | INotificacion,
-    section: 'parcelas' as ISection
+    section: 'Registros' as ISection,
+    selection: '' as string
 };
 
 export function reducer(state: typeof initialState=initialState, action: actionTypes) {
@@ -16,6 +17,9 @@ export function reducer(state: typeof initialState=initialState, action: actionT
 
         case 'select-section':
             return update(state, {section: {$set: action.section}});
+
+        case 'set-selection':
+            return update(state, {selection: {$set: action.selection}});
 
         default:
             return state

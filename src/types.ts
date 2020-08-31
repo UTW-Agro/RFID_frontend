@@ -3,4 +3,4 @@ export interface INotificacion {
     variant: 'info' | 'warning' | 'error' | 'success'
 }
 
-export type ISection = 'parcelas' | 'descarga' | 'datos' | 'visualizacion'
+export type ISection = 'Menu' | 'Registros'
